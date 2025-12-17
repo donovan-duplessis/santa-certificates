@@ -56,7 +56,7 @@ select = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"santa_certificates.py" = ["ANN401"]  # Allow Any for TypedDict flexibility
+"santa_certificates.py" = ["ANN401", "E501"]  # Allow Any and long lines for HTML content
 
 [tool.isort]
 profile = "black"

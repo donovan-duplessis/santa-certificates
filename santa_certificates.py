@@ -22,6 +22,7 @@ from typing import TypedDict
 
 class ChildData(TypedDict):
     """Type definition for child certificate data."""
+
     name: str
     message: str
     gift: str
@@ -31,17 +32,19 @@ class ChildData(TypedDict):
 
 def load_template(template_path: Path) -> str:
     """Load the HTML template from file."""
-    return template_path.read_text(encoding='utf-8')
+    return template_path.read_text(encoding="utf-8")
 
 
 def load_image_as_base64(image_path: Path, mime_type: str = "image/png") -> str:
     """Load an image file and return as base64 data URI."""
     with open(image_path, "rb") as f:
-        encoded = base64.b64encode(f.read()).decode('utf-8')
+        encoded = base64.b64encode(f.read()).decode("utf-8")
     return f"data:{mime_type};base64,{encoded}"
 
 
-def generate_certificate(child_data: ChildData, template: str, tree_image: str, seal_image: str) -> str:
+def generate_certificate(
+    child_data: ChildData, template: str, tree_image: str, seal_image: str
+) -> str:
     """
     Generate a personalized Santa certificate as an HTML string.
 
@@ -83,7 +86,7 @@ def main() -> None:
         {
             "name": "Lia du Plessis",
             "filename": "lia_certificate.html",
-            "message": '''
+            "message": """
                 <p>My dear <span class="highlight">Lia</span>, what a remarkable young lady you have become!</p>
 
                 <p>I've been watching you this year, and my goodness, you have made me SO proud!
@@ -101,14 +104,14 @@ def main() -> None:
 
                 <p>This gift is for YOU - to <span class="highlight">spoil yourself</span> and get some wonderful things
                 for your exciting new chapter ahead. You deserve every bit of it!</p>
-            ''',
+            """,
             "gift": "R3,500",
-            "gift_note": "Deposited into your account - treat yourself, superstar!"
+            "gift_note": "Deposited into your account - treat yourself, superstar!",
         },
         {
             "name": "Daniel du Plessis",
             "filename": "daniel_certificate.html",
-            "message": '''
+            "message": """
                 <p>My dear <span class="highlight">Daniel</span>, what an AWESOME young man you are!</p>
 
                 <p>Ho ho ho! I've been keeping a very close eye on you this year, and WOW -
@@ -129,9 +132,9 @@ def main() -> None:
                 step up and be amazing - you've got this, champ! Grade 5 is going to be YOUR year!</p>
 
                 <p>Keep being the incredible, sporty, kind-hearted legend that you are!</p>
-            ''',
+            """,
             "gift": "R2,500",
-            "gift_note": "A special stocking stuffer for the amazing DanTheMan!"
+            "gift_note": "A special stocking stuffer for the amazing DanTheMan!",
         },
     ]
 
@@ -162,10 +165,13 @@ def main() -> None:
         try:
             html = generate_certificate(child, template, tree_image, seal_image)
             output_path = output_dir / child["filename"]
-            output_path.write_text(html, encoding='utf-8')
+            output_path.write_text(html, encoding="utf-8")
             print(f"Created {child['name']}'s certificate: {output_path}")
         except (OSError, KeyError) as e:
-            print(f"Error creating certificate for {child.get('name', 'unknown')}: {e}", file=sys.stderr)
+            print(
+                f"Error creating certificate for {child.get('name', 'unknown')}: {e}",
+                file=sys.stderr,
+            )
             sys.exit(1)
 
     print("\nHo Ho Ho! All certificates are ready!")

@@ -2,7 +2,8 @@
 
 # Generate Santa Certificates for Lia and Daniel du Plessis
 
-cd /home/donovan/code/santa
+# Change to script's directory
+cd "$(dirname "$0")"
 
 echo "Generating HTML certificates..."
 python3 santa_certificates.py

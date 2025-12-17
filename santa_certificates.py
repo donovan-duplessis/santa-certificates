@@ -490,7 +490,9 @@ def main() -> None:
         None
     """
 
-    output_dir = Path("/home/donovan/code/santa/build")
+    script_dir = Path(__file__).parent.resolve()
+    output_dir = script_dir / "build"
+    output_dir.mkdir(exist_ok=True)
 
     # Generate Lia's certificate
     lia_html = generate_certificate(lia_data)

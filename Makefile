@@ -29,9 +29,10 @@ clean-pyc: ## Remove compiled python files
 	@find . -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
 	@find . -name '*~' -exec rm -f {} +
 
-format: ## Format codebase with black and isort
+format: ## Format codebase with black, isort, and docformatter
 	uv run isort .
 	uv run black .
+	uv run docformatter --in-place --recursive .
 
 format-check: ## Check formatting without changing files
 	uv run isort --check-only .

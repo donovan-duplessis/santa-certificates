@@ -17,6 +17,7 @@ dev = [
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "isort>=5.13.2",
+    "docformatter>=1.7.5",
 ]
 
 [build-system]
@@ -71,3 +72,11 @@ no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 strict_equality = true
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 88
+wrap-descriptions = 88
+blank = false
+pre-summary-newline = true
+make-summary-multi-line = true

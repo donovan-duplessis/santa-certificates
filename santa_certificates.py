@@ -21,7 +21,11 @@ from typing import TypedDict
 
 
 class ChildData(TypedDict):
-    """Type definition for child certificate data."""
+    """
+    Type definition for child certificate data.
+
+    Defines the required fields for generating a personalized certificate.
+    """
 
     name: str
     message: str
@@ -31,12 +35,34 @@ class ChildData(TypedDict):
 
 
 def load_template(template_path: Path) -> str:
-    """Load the HTML template from file."""
+    """
+    Load the HTML template from file.
+
+    Args:
+        template_path: Path to the HTML template file
+
+    Returns:
+        str: The template content as a string
+    """
+
     return template_path.read_text(encoding="utf-8")
 
 
 def load_image_as_base64(image_path: Path, mime_type: str = "image/png") -> str:
-    """Load an image file and return as base64 data URI."""
+    """
+    Load an image file and return as base64 data URI.
+
+    Reads the binary content of an image file and encodes it as a base64
+    data URI suitable for embedding directly in HTML.
+
+    Args:
+        image_path: Path to the image file
+        mime_type: MIME type for the data URI (default: image/png)
+
+    Returns:
+        str: Base64-encoded data URI string
+    """
+
     with open(image_path, "rb") as f:
         encoded = base64.b64encode(f.read()).decode("utf-8")
     return f"data:{mime_type};base64,{encoded}"
@@ -48,18 +74,22 @@ def generate_certificate(
     """
     Generate a personalized Santa certificate as an HTML string.
 
+    Populates the HTML template with child-specific data and embedded images
+    to create a complete, self-contained certificate document.
+
     Args:
-        child_data: Dictionary containing the child's certificate details.
-        template: The HTML template string.
-        tree_image: Base64-encoded tree image data URI.
-        seal_image: Base64-encoded seal image data URI.
+        child_data: Dictionary containing the child's certificate details
+        template: The HTML template string with placeholder variables
+        tree_image: Base64-encoded tree image data URI
+        seal_image: Base64-encoded seal image data URI
 
     Returns:
-        A complete HTML document as a string.
+        str: A complete HTML document as a string
 
     Raises:
-        KeyError: If required keys are missing from child_data.
+        KeyError: If required keys are missing from child_data
     """
+
     required_keys = {"name", "message", "gift", "gift_note", "filename"}
     missing = required_keys - child_data.keys()
     if missing:
@@ -79,9 +109,14 @@ def main() -> None:
     """
     Generate Santa certificates for children.
 
-    Creates personalized HTML certificate files in the build directory.
+    Loads the HTML template and image assets, then generates personalized
+    certificate files for each child defined in the children list. Outputs
+    HTML files to the build directory.
+
+    Raises:
+        SystemExit: If template/assets fail to load or certificate generation fails
     """
-    # Define child data
+
     children: list[ChildData] = [
         {
             "name": "Lia du Plessis",

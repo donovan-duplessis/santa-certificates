@@ -1,0 +1,9 @@
+# Generated PDFs
+*.pdf
+
+# Build artifacts
+build/
+
+# Python
+__pycache__/
+*.pyc

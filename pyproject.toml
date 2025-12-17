@@ -1,0 +1,82 @@
+[project]
+name = "santa-certificates"
+version = "1.0.0"
+description = "Generate personalized Santa Nice List certificates as HTML/PDF"
+requires-python = ">=3.12"
+authors = [
+    { name = "Donovan du Plessis", email = "donovan@binarytrooper.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "black>=24.10.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "isort>=5.13.2",
+    "docformatter>=1.7.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | venv
+  | build
+)/
+'''
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = [
+    ".venv",
+    "venv",
+    ".git",
+    "__pycache__",
+    "build",
+]
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes errors
+    "B",   # flake8-bugbear
+    "ANN", # flake8-annotations
+]
+
+[tool.ruff.lint.per-file-ignores]
+"santa_certificates.py" = ["ANN401", "E501"]  # Allow Any and long lines for HTML content
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 88
+wrap-descriptions = 88
+blank = false
+pre-summary-newline = true
+make-summary-multi-line = true
